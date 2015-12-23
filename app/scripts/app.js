@@ -12,6 +12,7 @@ angular
     .module('app', [
         'ngRoute',
         'app.menu',
+        'app.salary',
         'app.main',
         'app.test'
     ])
@@ -40,4 +41,4 @@ angular
             .otherwise({
                 redirectTo: '/'
             });
-  });
+    });
