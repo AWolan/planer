@@ -1,0 +1,42 @@
+<section data-ng-controller="SalaryController" data-ng-app="salary">
+    Salary list
+    
+    <table>
+        <tr>
+            <td>{{salaryTitle.year}}</td>
+            <td>{{salaryTitle.month}}</td>
+            <td>{{salaryTitle.gross}}</td>
+            <td>{{salaryTitle.net}}</td>
+            <td>{{salaryTitle.retiringContribution}}</td>
+            <td>{{salaryTitle.rentContribution}}</td>
+            <td>{{salaryTitle.illnessContribution}}</td>
+            <td>{{salaryTitle.healthContribution}}</td>
+            <td>{{salaryTitle.taxContribution}}</td>
+        </tr>
+        <tr data-ng-repeat-start="salary in salaryList" data-ng-click="onSalaryClick(salary)">
+            <td>{{salary.year}}</td>
+            <td>{{salary.month}}</td>
+            <td>{{salary.gross | number: 2}}</td>
+            <td>{{salary.net | number: 2}}</td>
+            <td>{{salary.retiringContribution | number: 2}}</td>
+            <td>{{salary.rentContribution | number: 2}}</td>
+            <td>{{salary.illnessContribution | number: 2}}</td>
+            <td>{{salary.healthContribution | number: 2}}</td>
+            <td>{{salary.taxContribution | number: 2}}</td>
+        </tr>
+        <tr data-ng-repeat-end data-ng-show="salary.showDetails">
+            <td colspan=>{{salary.gross}}</td>
+        </tr>
+        <tr>
+            <td>RAZEM</td>
+            <td></td>
+            <td>{{salaryList | total: 'gross' | number: 2}}</td>
+            <td>{{salaryList | total: 'net' | number: 2}}</td>
+            <td>{{salaryList | total: 'retiringContribution' | number: 2}}</td>
+            <td>{{salaryList | total: 'rentContribution' | number: 2}}</td>
+            <td>{{salaryList | total: 'illnessContribution' | number: 2}}</td>
+            <td>{{salaryList | total: 'healthContribution' | number: 2}}</td>
+            <td>{{salaryList | total: 'taxContribution' | number: 2}}</td>
+        </tr>
+    </table>
+</section>

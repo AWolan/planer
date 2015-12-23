@@ -11,20 +11,46 @@
 angular
     .module('app', [
         'ngRoute',
-        'app.menu',
-        'app.salary',
-        'app.main',
-        'app.test'
+        'menu',
+        'salary',
+        'main',
+        'test'
     ])
+    .factory('math', function () {
+        return {
+            sum: function (list) {
+                var i, result = 0;
+                for (i = 0; i < list.length; i += 1) {
+                    result += list[i];
+                }
+                return result;
+            }
+        };
+    })
+    .filter('total', ['math', function (math) {
+        return function (data, key) {
+            var i, list = [];
+            
+            if (data && key) {
+                for (i = 0; i < data.length; i += 1) {
+                    list.push(parseFloat(data[i][key]));
+                }
+                
+                return math.sum(list);
+            } else {
+                return 0;
+            }
+        };
+    }])
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/main.html',
                 controller: 'MainController'
             })
-            .when('/test', {
-                templateUrl: 'views/test.html',
-                controller: 'TestController'
+            .when('/salary', {
+                templateUrl: 'views/salary.html',
+                controller: 'SalaryController'
             })
             .when('/list', {
                 templateUrl: 'views/list.html',

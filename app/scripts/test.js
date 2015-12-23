@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('app.test', [])
+    .module('test', [])
     .controller('TestController', ['$scope', 'calculateSalary', function ($scope, calculateSalary) {
         $scope.$watch('base', function (newValue, oldValue) {
             var pay = {

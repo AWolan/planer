@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('app.main', [])
+    .module('main', [])
     .controller('MainController', ['$scope', 'calculateSalary', function ($scope, calculateSalary) {
         var i, salary,
             salaryList = [],
