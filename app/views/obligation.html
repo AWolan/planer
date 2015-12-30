@@ -1,3 +1,54 @@
 <section data-ng-controller="ObligationController" data-ng-app="obligation">
-
+    <table border="1">
+        <tr>
+            <td rowspan="2">{{obligationTitle.name}}</td>
+            <td rowspan="2">{{obligationTitle.group}}</td>
+            <td rowspan="2">{{obligationTitle.totalAmount}}</td>
+            <td rowspan="2">{{obligationTitle.left}}</td>
+            <td colspan="2">{{obligationTitle.prev}}</td>
+            <td colspan="2">{{obligationTitle.next}}</td>
+        </tr>
+        <tr>
+            <td>{{obligationTitle.amount}}</td>
+            <td>{{obligationTitle.date}}</td>
+            <td>{{obligationTitle.amount}}</td>
+            <td>{{obligationTitle.date}}</td>
+        </tr>
+        <tr data-ng-repeat-start="obligation in obligationList" data-ng-click="onObligationClick(obligation)">
+            <td>{{obligation.name}}</td>
+            <td>{{obligation.group}}</td>
+            <td>{{obligation.totalAmount}}</td>
+            <td>{{obligation.left}}</td>
+            <td>{{obligation.prevAmount}}</td>
+            <td>{{obligation.prevDate}}</td>
+            <td>{{obligation.nextAmount}}</td>
+            <td>{{obligation.nextDate}}</td>
+        </tr>
+        <tr data-ng-repeat-end data-ng-show="obligation.showDetails">
+            <td colspan=8>
+                <table border="1">
+                    <tr>
+                        <td rowspan="2">{{obligationTitle.details.name}}</td>
+                        <td rowspan="2">{{obligationTitle.details.left}}</td>
+                        <td colspan="2">{{obligationTitle.details.plan}}</td>
+                        <td colspan="2">{{obligationTitle.details.payment}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{obligationTitle.date}}</td>
+                        <td>{{obligationTitle.amount}}</td>
+                        <td>{{obligationTitle.date}}</td>
+                        <td>{{obligationTitle.amount}}</td>
+                    </tr>
+                    <tr data-ng-repeat="payment in obligation.paymentList">
+                        <td>{{payment.name}}</td>
+                        <td>{{payment.remains}}</td>
+                        <td>{{payment.plan.date}}</td>
+                        <td>{{payment.plan.amount}}</td>
+                        <td>{{payment.payment.date}}</td>
+                        <td>{{payment.payment.amount}}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </section>

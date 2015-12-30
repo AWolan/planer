@@ -1,3 +1,8 @@
 <section data-ng-controller="DetailsController" data-ng-app="details">
-
+    {{actualMonth.getFirstDay() | date:'dd-MM-yyyy'}}
+    {{actualMonth.getLastDay() | date:'dd-MM-yyyy'}}
+    {{prevMonth.getFirstDay() | date:'dd-MM-yyyy'}}
+    {{prevMonth.getLastDay() | date:'dd-MM-yyyy'}}
+    {{nextMonth.getFirstDay() | date:'dd-MM-yyyy'}}
+    {{nextMonth.getLastDay() | date:'dd-MM-yyyy'}}
 </section>

@@ -1,42 +1,75 @@
 <section data-ng-controller="SalaryController" data-ng-app="salary">
     Salary list
     
-    <table>
+    <table class="base">
         <tr>
-            <td>{{salaryTitle.year}}</td>
-            <td>{{salaryTitle.month}}</td>
-            <td>{{salaryTitle.gross}}</td>
-            <td>{{salaryTitle.net}}</td>
-            <td>{{salaryTitle.retiringContribution}}</td>
-            <td>{{salaryTitle.rentContribution}}</td>
-            <td>{{salaryTitle.illnessContribution}}</td>
-            <td>{{salaryTitle.healthContribution}}</td>
-            <td>{{salaryTitle.taxContribution}}</td>
+            <th>{{salaryTitle.year}}</th>
+            <th>{{salaryTitle.month}}</th>
+            <th>{{salaryTitle.gross}}</th>
+            <th>{{salaryTitle.net}}</th>
         </tr>
-        <tr data-ng-repeat-start="salary in salaryList" data-ng-click="onSalaryClick(salary)">
+        <tr class="base" data-ng-repeat-start="salary in salaryList" data-ng-click="onSalaryClick(salary)">
             <td>{{salary.year}}</td>
             <td>{{salary.month}}</td>
             <td>{{salary.gross | number: 2}}</td>
             <td>{{salary.net | number: 2}}</td>
-            <td>{{salary.retiringContribution | number: 2}}</td>
-            <td>{{salary.rentContribution | number: 2}}</td>
-            <td>{{salary.illnessContribution | number: 2}}</td>
-            <td>{{salary.healthContribution | number: 2}}</td>
-            <td>{{salary.taxContribution | number: 2}}</td>
         </tr>
         <tr data-ng-repeat-end data-ng-show="salary.showDetails">
-            <td colspan=>{{salary.gross}}</td>
+            <td colspan="4">
+                <table class="details">
+                    <tr>
+                        <td>{{salaryTitle.retiringContribution}}</td>
+                        <td>{{salary.retiringContribution | number: 2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{salaryTitle.rentContribution}}</td>
+                        <td>{{salary.rentContribution | number: 2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{salaryTitle.illnessContribution}}</td>
+                        <td>{{salary.illnessContribution | number: 2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{salaryTitle.healthContribution}}</td>
+                        <td>{{salary.healthContribution | number: 2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{salaryTitle.taxContribution}}</td>
+                        <td>{{salary.taxContribution | number: 2}}</td>
+                    </tr>
+                </table>
+            </td>
         </tr>
         <tr>
-            <td>RAZEM</td>
-            <td></td>
+            <td colspan="2">RAZEM</td>
             <td>{{salaryList | total: 'gross' | number: 2}}</td>
             <td>{{salaryList | total: 'net' | number: 2}}</td>
-            <td>{{salaryList | total: 'retiringContribution' | number: 2}}</td>
-            <td>{{salaryList | total: 'rentContribution' | number: 2}}</td>
-            <td>{{salaryList | total: 'illnessContribution' | number: 2}}</td>
-            <td>{{salaryList | total: 'healthContribution' | number: 2}}</td>
-            <td>{{salaryList | total: 'taxContribution' | number: 2}}</td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <table class="details">
+                    <tr>
+                        <td>{{salaryTitle.retiringContribution}}</td>
+                        <td>{{salaryList | total: 'retiringContribution' | number: 2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{salaryTitle.rentContribution}}</td>
+                        <td>{{salaryList | total: 'rentContribution' | number: 2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{salaryTitle.illnessContribution}}</td>
+                        <td>{{salaryList | total: 'illnessContribution' | number: 2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{salaryTitle.healthContribution}}</td>
+                        <td>{{salaryList | total: 'healthContribution' | number: 2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{salaryTitle.taxContribution}}</td>
+                        <td>{{salaryList | total: 'taxContribution' | number: 2}}</td>
+                    </tr>
+                </table>
+            </td>
         </tr>
     </table>
 </section>

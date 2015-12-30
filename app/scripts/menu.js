@@ -2,27 +2,32 @@
 
 angular
     .module('menu', [])
-    .controller('menuController', function ($scope) {
+    .factory('menuTitle', function () {
+        return {
+            PL: {
+                main: 'Strona główna',
+                salary: 'Wynagrodzenie',
+                obligation: 'Zobowiązania'
+            }
+        };
+    })
+    .controller('menuController', ['$scope', 'menuTitle', function ($scope, menuTitle) {
+        var title = menuTitle.PL;
         $scope.menuItems = [
             {
-                title: 'Main page',
+                title: title.main,
                 link: '/',
                 icon: 'main.png'
             },
             {
-                title: 'List page',
-                link: '/list',
-                icon: 'list.png'
+                title: title.salary,
+                link: '/salary',
+                icon: 'salary.png'
             },
             {
-                title: 'Tree page',
-                link: '/tree',
-                icon: 'tree.png'
-            },
-            {
-                title: 'Edit page',
-                link: '/edit',
-                icon: 'edit.png'
+                title: title.obligation,
+                link: '/obligation',
+                icon: 'obligation.png'
             }
         ];
-    });
+    }]);

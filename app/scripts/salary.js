@@ -320,17 +320,33 @@ angular
             };
         };
     }])
-    .controller('SalaryController', ['$scope', 'salaryTitle', 'calculateSalary', 'salaryBaseList', function ($scope, salaryTitle, calculateSalary, salaryBaseList) {
-        var i, salary,
-            salaryList = [];
-        
-        for (i = 0; i < salaryBaseList.length; i += 1) {
-            salary = calculateSalary(salaryBaseList[i]);
-            salaryList.push(salary);
-        }
+    .factory('salaryManager', ['calculateSalary', function (calculateSalary) {
+        return {
+            calculateSalary: function (salaryBaseList) {
+                var i, salary,
+                    salaryList = [];
 
+                for (i = 0; i < salaryBaseList.length; i += 1) {
+                    salary = calculateSalary(salaryBaseList[i]);
+                    salaryList.push(salary);
+                }
+                return salaryList;
+            },
+            getBaseSalaryForMonth: function (salaryBaseList, fullMonth) {
+                var i, salaryBase, result = [];
+                for (i = 0; i < salaryBaseList.length; i += 1) {
+                    salaryBase = salaryBaseList[i];
+                    if (salaryBase.year === fullMonth.year && salaryBase.month === fullMonth.month) {
+                        result.push(salaryBase);
+                    }
+                }
+                return result;
+            }
+        };
+    }])
+    .controller('SalaryController', ['$scope', 'salaryTitle', 'salaryManager', 'salaryBaseList', function ($scope, salaryTitle, salaryManager, salaryBaseList) {
         $scope.salaryTitle = salaryTitle.PL;
-        $scope.salaryList = salaryList;
+        $scope.salaryList = salaryManager.calculateSalary(salaryBaseList);
         $scope.onSalaryClick = function (salary) {
             salary.showDetails = !salary.showDetails;
         };

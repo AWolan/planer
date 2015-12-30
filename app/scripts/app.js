@@ -13,6 +13,8 @@ angular
         'ngRoute',
         'menu',
         'salary',
+        'obligation',
+        'details',
         'main',
         'test'
     ])
@@ -50,19 +52,16 @@ angular
             })
             .when('/salary', {
                 templateUrl: 'views/salary.html',
-                controller: 'SalaryController'
+                controller: 'SalaryController',
+                css: 'css/salary.scss'
             })
-            .when('/list', {
-                templateUrl: 'views/list.html',
-                controller: 'ListController'
+            .when('/obligation', {
+                templateUrl: 'views/obligation.html',
+                controller: 'ObligationController'
             })
-            .when('/tree', {
-                templateUrl: 'views/tree.html',
-                controller: 'TreeController'
-            })
-            .when('/edit', {
-                templateUrl: 'views/edit.html',
-                controller: 'EditController'
+            .when('/details', {
+                templateUrl: 'views/details.html',
+                controller: 'DetailsController'
             })
             .otherwise({
                 redirectTo: '/'
