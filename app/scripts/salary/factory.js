@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('salary', [])
+    .module('salary')
     .factory('salaryTitle', function () {
         return {
             PL : {
@@ -342,12 +342,5 @@ angular
                 }
                 return result;
             }
-        };
-    }])
-    .controller('SalaryController', ['$scope', 'salaryTitle', 'salaryManager', 'salaryBaseList', function ($scope, salaryTitle, salaryManager, salaryBaseList) {
-        $scope.salaryTitle = salaryTitle.PL;
-        $scope.salaryList = salaryManager.calculateSalary(salaryBaseList);
-        $scope.onSalaryClick = function (salary) {
-            salary.showDetails = !salary.showDetails;
         };
     }]);

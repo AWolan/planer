@@ -7,7 +7,8 @@ angular
             PL: {
                 main: 'Strona główna',
                 salary: 'Wynagrodzenie',
-                obligation: 'Zobowiązania'
+                obligation: 'Zobowiązania',
+                details: 'Podsumowanie'
             }
         };
     })
@@ -28,6 +29,11 @@ angular
                 title: title.obligation,
                 link: '/obligation',
                 icon: 'obligation.png'
+            },
+            {
+                title: title.details,
+                link: '/details',
+                icon: 'details.png'
             }
         ];
     }]);

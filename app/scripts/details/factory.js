@@ -1,10 +1,11 @@
 'use strict';
 
 angular
-    .module('details', [])
+    .module('details')
     .factory('detailsTitle', function () {
         return {
             PL: {
+                show: 'Pokaż miesiąc',
                 month: 'Miesiąc',
                 salary: {
                     main: 'Wynagrodzenie',
@@ -23,6 +24,7 @@ angular
                 }
             },
             EN: {
+                show: 'Show month',
                 month: 'Month',
                 salary: {
                     main: 'Salary',
@@ -105,35 +107,5 @@ angular
             actualObligation: actualObligationList,
             prevObligation: prevObligationList,
             nextObligation: nextObligationList
-        };
-    }])
-    .directive('monthDetails', ['detailsTitle', function (detailsTitle) {
-        return {
-            restrict: 'E',
-            transclude: true,
-            scope: {
-                monthDetails: '=model'
-            },
-            templateUrl: 'views/monthDetails.html',
-            link: function (scope, element, attrs, controllers) {
-                scope.detailsTitle = detailsTitle.PL;
-            }
-        };
-    }])
-    .controller('DetailsController', ['$scope', 'actualMonths', 'salaryForActualMonths', 'obligationForActualMonths', function ($scope, actualMonths, salaryList, obligationList) {
-        $scope.actualMonth = {
-            date: actualMonths.actual,
-            salaryList: salaryList.actualSalary,
-            obligationList: obligationList.actualObligation
-        };
-        $scope.prevMonth = {
-            date: actualMonths.prev,
-            salaryList: salaryList.prevSalary,
-            obligationList: obligationList.prevObligation
-        };
-        $scope.nextMonth = {
-            date: actualMonths.next,
-            salaryList: salaryList.nextSalary,
-            obligationList: obligationList.nextObligation
         };
     }]);
