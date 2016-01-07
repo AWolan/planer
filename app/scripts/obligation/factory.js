@@ -8,7 +8,7 @@ angular
                 id: 1,
                 name: 'Bezpieczna - Czynsz',
                 group: 'Mieszkanie',
-                type: 'Opłata',
+                type: 'bill',
                 paymentList: [
                     {
                         no: 1,
@@ -302,7 +302,7 @@ angular
                 id: 2,
                 name: 'Bezpieczna - Prąd',
                 group: 'Mieszkanie',
-                type: 'Opłata',
+                type: 'bill',
                 paymentList: [
                     {
                         no: 1,
@@ -427,7 +427,7 @@ angular
                 id: 3,
                 name: 'Bezpieczna - Gaz',
                 group: 'Mieszkanie',
-                type: 'Opłata',
+                type: 'bill',
                 paymentList: [
                     {
                         no: 1,
@@ -539,7 +539,7 @@ angular
                 id: 4,
                 name: 'Jedzenie',
                 group: 'Wyżywienie',
-                type: 'Wydatek',
+                type: 'expense',
                 paymentList: [
                     {
                         no: 1,
@@ -763,7 +763,7 @@ angular
                 id: 5,
                 name: 'Internet',
                 group: 'Play',
-                type: 'Opłata',
+                type: 'bill',
                 paymentList: [
                     {
                         no: 1,
@@ -1122,7 +1122,7 @@ angular
                 id: 6,
                 name: 'Telefon - Adaś',
                 group: 'Play',
-                type: 'Opłata',
+                type: 'bill',
                 paymentList: [
                     {
                         no: 1,
@@ -1481,14 +1481,14 @@ angular
                 id: 7,
                 name: 'Telefon - Ania',
                 group: 'Play',
-                type: 'Opłata',
+                type: 'bill',
                 paymentList: []
             },
             {
                 id: 8,
                 name: 'Paliwo',
                 group: 'Samochód',
-                type: 'Tankowanie',
+                type: 'tank',
                 paymentList: [
                     {
                         no: 1,
@@ -1963,7 +1963,7 @@ angular
                 id: 9,
                 name: 'Sprzęt - Euro',
                 group: 'Raty',
-                type: 'Kredyt',
+                type: 'credit',
                 amount: 4432.00,
                 paymentList: [
                     {
@@ -2672,7 +2672,7 @@ angular
                 id: 10,
                 name: 'Sprzęt - Neonet',
                 group: 'Kredyt',
-                type: 'Opłata',
+                type: 'credit',
                 amount: 3768.00,
                 paymentList: [
                     {
@@ -3101,7 +3101,7 @@ angular
                 id: 11,
                 name: 'Kredyt studencki',
                 group: 'Kredyt',
-                type: 'Opłata',
+                type: 'credit',
                 amount: 18000,
                 paymentList: [
                     {
@@ -3950,7 +3950,7 @@ angular
                 id: 12,
                 name: 'Karta kredytowa',
                 group: 'Kredyt',
-                type: 'Opłata',
+                type: 'credit',
                 paymentList: [
                     {
                         no: 1,
@@ -4327,12 +4327,33 @@ angular
         };
     })
     .factory('obligationManager', ['parse', 'obligationList', function (parse, obligationList) {
-        var getPayment = function (obligation, index) {
-            var payment = obligation.paymentList[index];
-            if (payment instanceof Array) {
-                payment = payment[payment.length - 1];
+        var calculateTank = function (payment, prevPayment) {
+            var i, tank, consumption, distance, liters, prevMileage,
+                tankList = [];
+
+            if (prevPayment && prevPayment.payment.length > 0) {
+                prevMileage = prevPayment.payment[prevPayment.payment.length - 1].mileage;
             }
-            return payment;
+
+            for (i = 0; i < payment.payment.length; i += 1) {
+                tank = payment.payment[i];
+                distance = tank.mileage - prevMileage;
+                prevMileage = tank.mileage;
+                liters = tank.amount / tank.literPrice;
+                consumption = liters / distance * 100;
+
+                tankList.push({
+                    amount: tank.amount,
+                    date: tank.date,
+                    literPrice: tank.literPrice,
+                    mileage: tank.mileage,
+                    liters: liters,
+                    distance: distance,
+                    consumption: consumption
+                });
+            }
+
+            return tankList;
         };
         return {
             getObligationForMonth: function (fullMonth) {
@@ -4370,7 +4391,7 @@ angular
                 return result;
             },
             getObligationData: function () {
-                var i, j, obligation, payment, firtNotDone,
+                var i, j, obligation, payment, firtNotDone, prevPayment,
                     totalAmount, left,
                     result = [],
                     paymentList = [];
@@ -4381,6 +4402,7 @@ angular
                     totalAmount = 0;
                     left = 0;
                     firtNotDone = null;
+                    prevPayment = null;
                     for (j = 0; j < obligation.paymentList.length; j += 1) {
                         payment = obligation.paymentList[j];
                         totalAmount += payment.plan.amount;
@@ -4390,6 +4412,10 @@ angular
                         }
                         if (!firtNotDone && !payment.done) {
                             firtNotDone = j;
+                        }
+                        if (obligation.type === 'tank') {
+                            payment.payment = calculateTank(payment, prevPayment);
+                            prevPayment = payment;
                         }
                     }
                     result.push({

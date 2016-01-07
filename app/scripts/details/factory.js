@@ -108,4 +108,5 @@ angular
             prevObligation: prevObligationList,
             nextObligation: nextObligationList
         };
-    }]);
+    }])
+    .factory();

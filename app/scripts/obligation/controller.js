@@ -8,4 +8,26 @@ angular
         $scope.onObligationClick = function (obligation) {
             obligation.showDetails = !obligation.showDetails;
         };
+        $scope.typeList = [
+            {
+                id: '',
+                name: 'Całość'
+            },
+            {
+                id: 'bill',
+                name: 'Rachunek'
+            },
+            {
+                id: 'credit',
+                name: 'Kredyt'
+            },
+            {
+                id: 'expense',
+                name: 'Wydatek'
+            },
+            {
+                id: 'tank',
+                name: 'Tankowanie'
+            }
+        ];
     }]);

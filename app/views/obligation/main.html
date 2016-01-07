@@ -1,62 +1,39 @@
 <section data-ng-controller="ObligationController" data-ng-app="obligation">
-    <table border="1">
-<!--
+    <table class="base">
         <tr>
-            <td rowspan="2">{{obligationTitle.name}}</td>
-            <td rowspan="2">{{obligationTitle.group}}</td>
-            <td rowspan="2">{{obligationTitle.totalAmount}}</td>
-            <td rowspan="2">{{obligationTitle.left}}</td>
-            <td colspan="2">{{obligationTitle.prev}}</td>
-            <td colspan="2">{{obligationTitle.next}}</td>
-        </tr>
-        <tr>
-            <td>{{obligationTitle.amount}}</td>
-            <td>{{obligationTitle.date}}</td>
-            <td>{{obligationTitle.amount}}</td>
-            <td>{{obligationTitle.date}}</td>
-        </tr>
--->
-        <tr>
-            <td>{{obligationTitle.name}}</td>
-            <td>{{obligationTitle.group}}</td>
-            <td>{{obligationTitle.totalAmount}}</td>
-            <td>{{obligationTitle.left}}</td>
-            <td>{{obligationTitle.prev}}</td>
-            <td>{{obligationTitle.next}}</td>
+            <th>{{obligationTitle.name}}</th>
+            <th>{{obligationTitle.group}}</th>
+            <th>{{obligationTitle.totalAmount}}</th>
+            <th>{{obligationTitle.left}}</th>
+            <th>{{obligationTitle.prev}}</th>
+            <th>{{obligationTitle.next}}</th>
         </tr>
         <tr data-ng-repeat-start="obligation in obligationList" data-ng-click="onObligationClick(obligation)">
             <td>{{obligation.name}}</td>
             <td>{{obligation.group}}</td>
             <td>{{obligation.totalAmount | number: 2}}</td>
             <td>{{obligation.left | number: 2}}</td>
-            <td><data-payment-details data-model="obligation.prev"></data-payment-details></td>
-            <td><data-payment-details data-model="obligation.next"></data-payment-details></td>
+            <td><data-payment-details data-model="obligation.prev" data-type="obligation.type"></data-payment-details></td>
+            <td><data-payment-details data-model="obligation.next" data-type="obligation.type"></data-payment-details></td>
         </tr>
         <tr data-ng-repeat-end data-ng-show="obligation.showDetails">
-            <td colspan=8>
-                <table border="1">
-                    <tr>
-                        <td rowspan="2">{{obligationTitle.details.name}}</td>
-                        <td rowspan="2">{{obligationTitle.details.left}}</td>
-                        <td colspan="2">{{obligationTitle.details.plan}}</td>
-                        <td colspan="2">{{obligationTitle.details.payment}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{obligationTitle.date}}</td>
-                        <td>{{obligationTitle.amount}}</td>
-                        <td>{{obligationTitle.date}}</td>
-                        <td>{{obligationTitle.amount}}</td>
-                    </tr>
-                    <tr data-ng-repeat="payment in obligation.paymentList">
-                        <td>{{payment.name}}</td>
-                        <td>{{payment.remains}}</td>
-                        <td>{{payment.plan.date}}</td>
-                        <td>{{payment.plan.amount}}</td>
-                        <td>{{payment.payment.date}}</td>
-                        <td>{{payment.payment.amount}}</td>
-                    </tr>
-                </table>
+            <td colspan="8" >
+                <data-payment-list data-list="obligation.paymentList" data-type="obligation.type"></data-payment-details>
             </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th>{{obligationTitle.name}}</th>
+            <th>{{obligationTitle.totalAmount}}</th>
+            <th>{{obligationTitle.left}}</th>
+            <th>{{obligationTitle.percent}}</th>
+        </tr>
+        <tr data-ng-repeat="type in typeList">
+            <td>{{type.name}}</td>
+            <td>{{total = (obligationList | filter: {type: type.id} | total: 'totalAmount') | number: 2}}</td>
+            <td>{{left = (obligationList | filter: {type: type.id} | total: 'left') | number: 2}}</td>
+            <td>{{(100*left/total) | number: 2}}%</td>
         </tr>
     </table>
     <payment-details></payment-details>

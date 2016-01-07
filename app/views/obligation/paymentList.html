@@ -1,15 +1,15 @@
 <section data-ng-switch="type">
     <section data-ng-switch-when="bill">
-        <data-bill-details data-model="paymentDetails"></data-bill-details>
+        <data-bill-list data-list="paymentList"></data-bill-list>
     </section>
     <section data-ng-switch-when="credit">
-        <data-credit-details data-model="paymentDetails"></data-credit-details>
+        <data-credit-list data-list="paymentList"></data-credit-list>
     </section>
     <section data-ng-switch-when="expense">
-        <data-expense-details data-model="paymentDetails"></data-expense-details>
+        <data-expense-list data-list="paymentList"></data-expense-list>
     </section>
     <section data-ng-switch-when="tank">
-        <data-tank-details data-model="paymentDetails"></data-tank-details>
+        <data-tank-list data-list="paymentList"></data-tank-list>
     </section>
     <section data-ng-switch-default></section>
 </section>

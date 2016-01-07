@@ -11,12 +11,11 @@
 angular
     .module('app', [
         'ngRoute',
+        'angular.filter',
         'menu',
         'salary',
         'obligation',
-        'details',
-        'main',
-        'test'
+        'details'
     ])
     .factory('monthNames', function () {
         return {
@@ -87,12 +86,31 @@ angular
         };
     })
     .filter('total', ['math', function (math) {
+        var getValue = function (element, key) {
+            var i, value, keyList = [];
+            
+            if (key.indexOf('.') > 0) {
+                keyList = key.split('.');
+            } else {
+                keyList.push(key);
+            }
+            
+            value = element;
+            for (i = 0; i < keyList.length; i += 1) {
+                if (value) {
+                    value = value[keyList[i]];
+                }
+            }
+            
+            return value;
+        };
         return function (data, key) {
-            var i, list = [];
+            var i, keyList, list = [];
             
             if (data && key) {
+                
                 for (i = 0; i < data.length; i += 1) {
-                    list.push(parseFloat(data[i][key]));
+                    list.push(parseFloat(getValue(data[i], key)));
                 }
                 
                 return math.sum(list);
@@ -118,7 +136,8 @@ angular
             })
             .when('/details', {
                 templateUrl: 'views/details/main.html',
-                controller: 'DetailsController'
+                controller: 'DetailsController',
+                css: 'css/details.scss'
             })
             .otherwise({
                 redirectTo: '/'
